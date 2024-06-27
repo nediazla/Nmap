@@ -1,4 +1,4 @@
-# Port Specification and Scan Order
+# Especificación de puerto y orden de escaneo
 
 Además de todos los métodos de escaneo discutidos anteriormente, Nmap ofrece opciones para especificar qué puertos se escanean y si el orden de escaneo es aleatorio o secuencial. De forma predeterminada, Nmap escanea los 1000 puertos más comunes para cada protocolo.
 
