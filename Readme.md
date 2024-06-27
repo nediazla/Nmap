@@ -2,7 +2,7 @@
 - [Options Summary](content/2-OptionsSummary.md)
 - [Target Specification](content/3-TargetSpecification.md)
 - [Host Discovery](content/4-HostDiscovery.md)
-- [Port Scanning Basics](content/5-PortscanningBasic.md)
+- [Port Scanning Basics](5-PortsScanningBasic.md)
 - [Port Scanning Techniques](content/6-PortScanningTechniques.md)
 - [Port Specification and Scan Order]()
 - [Service and Version Detection](l)
