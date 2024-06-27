@@ -1,0 +1,29 @@
+# Detección del sistema operativo
+
+Una de las características más conocidas de Nmap es la detección remota del sistema operativo mediante la huella digital de la pila TCP/IP. Nmap envía una serie de paquetes TCP y UDP al host remoto y examina prácticamente cada bit de las respuestas. Después de realizar docenas de pruebas, como el muestreo de ISN de TCP, el soporte y pedido de opciones de TCP, el muestreo de ID de IP y la verificación inicial del tamaño de la ventana, Nmap compara los resultados con su base de datos `nmap-os-db` de más de 2600 huellas dactilares de sistemas operativos conocidas y Imprime los detalles del sistema operativo si hay una coincidencia. Cada huella digital incluye una descripción textual de forma libre del sistema operativo y una clasificación que proporciona el nombre del proveedor (por ejemplo, Sun), el sistema operativo subyacente (por ejemplo, Solaris), la generación del sistema operativo (por ejemplo, 10) y el tipo de dispositivo (propósito general, enrutador, conmutador, juego). consola, etc.). La mayoría de las huellas digitales también tienen una representación de enumeración de plataforma común (CPE), como `cpe:/o:linux:linux_kernel:2.6`.
+
+Si Nmap no puede adivinar el sistema operativo de una máquina y las condiciones son buenas (por ejemplo, se encontraron al menos un puerto abierto y un puerto cerrado), Nmap proporcionará una URL que puede usar para enviar la huella digital si la sabe (con seguridad). el sistema operativo que se ejecuta en la máquina. Al hacer esto, contribuyes al conjunto de sistemas operativos conocidos por Nmap y, por lo tanto, será más preciso para todos.
+
+La detección del sistema operativo permite algunas otras pruebas que utilizan la información que se recopila durante el proceso de todos modos. Uno de ellos es la clasificación de previsibilidad de secuencias TCP. Esto mide aproximadamente qué tan difícil es establecer una conexión TCP falsificada contra el host remoto. Es útil para explotar relaciones de confianza basadas en la fuente-IP (rlogin, filtros de firewall, etc.) o para ocultar la fuente de un ataque. Este tipo de suplantación de identidad ya casi no se realiza, pero muchas máquinas siguen siendo vulnerables a ella. El número de dificultad real se basa en un muestreo estadístico y puede fluctuar. Generalmente es mejor utilizar la clasificación inglesa, como "desafío digno" o "broma trivial". Esto solo se informa en la salida normal en modo detallado (`-v`). Cuando el modo detallado está habilitado junto con `-O`, también se informa la generación de la secuencia de ID de IP. La mayoría de las máquinas pertenecen a la clase "incremental", lo que significa que incrementan el campo ID en el encabezado IP para cada paquete que envían. Esto los hace vulnerables a varios ataques avanzados de recopilación de información y suplantación de identidad.
+
+Otra información adicional que permite la detección del sistema operativo es una estimación del tiempo de actividad de un objetivo. Esto utiliza la opción de marca de tiempo TCP ([RFC 1323](http://www.rfc-editor.org/rfc/rfc1323.txt)) para adivinar cuándo se reinició una máquina por última vez. La suposición puede ser inexacta debido a que el contador de marca de tiempo no se inicializa a cero o que el contador se desborda y gira, por lo que se imprime solo en modo detallado.
+
+La detección del sistema operativo se trata en el [Capítulo 8, _Detección remota del sistema operativo_](https://nmap.org/book/osdetect.html "Capítulo 8. Detección remota del sistema operativo").
+
+La detección del sistema operativo se habilita y controla con las siguientes opciones:
+
+`-O` (Enable OS detection)
+
+Habilita la detección del sistema operativo, como se analizó anteriormente. Alternativamente, puede usar `-A` para habilitar la detección del sistema operativo junto con otras cosas.
+
+`--osscan-limit` (Limit OS detection to promising targets)
+
+La detección del sistema operativo es mucho más efectiva si se encuentra al menos un puerto TCP abierto y uno cerrado. Configure esta opción y Nmap ni siquiera intentará la detección del sistema operativo en hosts que no cumplan con este criterio. Esto puede ahorrar mucho tiempo, especialmente en los análisis `-Pn` de muchos hosts. Solo importa cuando se solicita la detección del sistema operativo con `-O` o `-A`.
+
+`--osscan-guess`; `--fuzzy` (Guess OS detection results)
+
+Cuando Nmap no puede detectar una coincidencia perfecta de sistema operativo, a veces ofrece posibilidades de coincidencias cercanas. La coincidencia tiene que ser muy igualada para que Nmap haga esto de forma predeterminada. Cualquiera de estas opciones (equivalentes) hace que Nmap adivine de forma más agresiva. Nmap aún le indicará cuándo se imprime una coincidencia imperfecta y mostrará su nivel de confianza (porcentaje) para cada suposición.
+
+`--max-os-tries` (Set the maximum number of OS detection tries against a target)
+
+Cuando Nmap realiza la detección del sistema operativo contra un objetivo y no logra encontrar una coincidencia perfecta, generalmente repite el intento. De forma predeterminada, Nmap lo intenta cinco veces si las condiciones son favorables para el envío de huellas digitales del sistema operativo, y dos veces cuando las condiciones no son tan buenas. Especificar un valor más bajo `--max-os-tries` (como 1) acelera Nmap, aunque se pierden reintentos que potencialmente podrían identificar el sistema operativo. Alternativamente, se puede establecer un valor alto para permitir aún más reintentos cuando las condiciones sean favorables. Esto rara vez se hace, excepto para generar mejores huellas digitales para su envío e integración en Nmap.

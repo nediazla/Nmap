@@ -6,7 +6,7 @@
 - [Port Scanning Techniques](content/6-PortScanningTechniques.md)
 - [Port Specification and Scan Order](content/7-PortSpecificationAndScanOrder.md)
 - [Service and Version Detection](content/8-ServiceAndVersionDetection.md)
-- [OS Detection]()
+- [OS Detection](content/9-OsDetection.md)
 - [Nmap Scripting Engine (NSE)]()
 - [Timing and Performance]()
 - [Firewall/IDS Evasion and Spoofing]()
@@ -14,7 +14,4 @@
 - [Miscellaneous Options]()
 - [Runtime Interaction]()
 - [Examples]()
-- [Nmap Book]()
-- [Bugs]()
-
 
