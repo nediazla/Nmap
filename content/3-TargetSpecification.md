@@ -27,7 +27,7 @@ Para encuestas en Internet y otras investigaciones, es posible que desee elegir 
 Especifica una lista de objetivos separados por comas que se excluirán del análisis incluso si forman parte del rango de red general que especifique. La lista que usted pasa utiliza la sintaxis normal de Nmap, por lo que puede incluir nombres de host, bloques de red CIDR, rangos de octetos, etc. Esto puede ser útil cuando la red que desea escanear incluye servidores intocables de misión crítica, sistemas que se sabe que reaccionan de manera adversa a escaneos de puertos o subredes administradas por otras personas.
 
 `--excludefile <exclude_file>` (Excluir lista del archivo)
-Esto ofrece la misma funcionalidad que la opción --exclude, excepto que los destinos excluidos se proporcionan en un <exclude_file> delimitado por nueva línea, espacio o tabulaciones en lugar de en la línea de comando.
+Esto ofrece la misma funcionalidad que la opción `--exclude`, excepto que los destinos excluidos se proporcionan en un <exclude_file> delimitado por nueva línea, espacio o tabulaciones en lugar de en la línea de comando.
 
 El archivo de exclusión puede contener comentarios que comiencen con # y se extiendan hasta el final de la línea.
 
@@ -37,18 +37,18 @@ Le dice a Nmap que nunca realice una resolución DNS inversa en las direcciones 
 `-R` (resolución DNS para todos los objetivos)
 Le dice a Nmap que siempre realice una resolución DNS inversa en las direcciones IP de destino. Normalmente, el DNS inverso sólo se realiza contra hosts receptivos (en línea).
 
-`--resolve-al`l (Escanea cada dirección resuelta)
-Si un destino de nombre de host se resuelve en más de una dirección, escanéelas todas. El comportamiento predeterminado es escanear solo la primera dirección resuelta. De todos modos, solo se escanearán las direcciones de la familia de direcciones adecuada: IPv4 de forma predeterminada, IPv6 con -6.
+`--resolve-all` (Escanea cada dirección resuelta)
+Si un destino de nombre de host se resuelve en más de una dirección, escanéelas todas. El comportamiento predeterminado es escanear solo la primera dirección resuelta. De todos modos, solo se escanearán las direcciones de la familia de direcciones adecuada: IPv4 de forma predeterminada, IPv6 con `-6`.
 
 `--unique` (Escanea cada dirección solo una vez)
 Escanee cada dirección IP solo una vez. El comportamiento predeterminado es escanear cada dirección tantas veces como se especifica en la lista de objetivos, como cuando los rangos de red se superponen o diferentes nombres de host se resuelven en la misma dirección.
 
 `--system-dns` (Usa el solucionador de DNS del sistema)
-De forma predeterminada, Nmap resuelve inversamente las direcciones IP enviando consultas directamente a los servidores de nombres configurados en su host y luego escuchando las respuestas. Se realizan muchas solicitudes (a menudo docenas) en paralelo para mejorar el rendimiento. Especifique esta opción para utilizar el solucionador de su sistema (una IP a la vez mediante la llamada getnameinfo). Esto es más lento y rara vez es útil a menos que encuentre un error en el solucionador paralelo de Nmap (avísenos si lo encuentra). El solucionador del sistema siempre se utiliza para búsquedas directas (obtener una dirección IP de un nombre de host).
+De forma predeterminada, Nmap resuelve inversamente las direcciones IP enviando consultas directamente a los servidores de nombres configurados en su host y luego escuchando las respuestas. Se realizan muchas solicitudes (a menudo docenas) en paralelo para mejorar el rendimiento. Especifique esta opción para utilizar el solucionador de su sistema (una IP a la vez mediante la llamada `getnameinfo`). Esto es más lento y rara vez es útil a menos que encuentre un error en el solucionador paralelo de Nmap (avísenos si lo encuentra). El solucionador del sistema siempre se utiliza para búsquedas directas (obtener una dirección IP de un nombre de host).
 
 `--dns-servers <servidor1>[,<servidor2>[,...]]` (Servidores a utilizar para consultas DNS inversas)
-De forma predeterminada, Nmap determina sus servidores DNS (para resolución rDNS) a partir de su archivo resolv.conf (Unix) o el Registro (Win32). Alternativamente, puede utilizar esta opción para especificar servidores alternativos. Esta opción no se acepta si está utilizando --system-dns. El uso de varios servidores DNS suele ser más rápido, especialmente si elige servidores autorizados para su espacio IP de destino. Esta opción también puede mejorar el sigilo, ya que sus solicitudes pueden rebotar en casi cualquier servidor DNS recursivo de Internet.
+De forma predeterminada, Nmap determina sus servidores DNS (para resolución rDNS) a partir de su archivo resolv.conf (Unix) o el Registro (Win32). Alternativamente, puede utilizar esta opción para especificar servidores alternativos. Esta opción no se acepta si está utilizando `--system-dns`. El uso de varios servidores DNS suele ser más rápido, especialmente si elige servidores autorizados para su espacio IP de destino. Esta opción también puede mejorar el sigilo, ya que sus solicitudes pueden rebotar en casi cualquier servidor DNS recursivo de Internet.
 
-Esta opción también resulta útil al escanear redes privadas. A veces, sólo unos pocos servidores de nombres proporcionan información rDNS adecuada y es posible que ni siquiera sepas dónde están. Puede escanear la red en busca del puerto 53 (quizás con detección de versión), luego intente escanear la lista Nmap (-sL) especificando cada servidor de nombres uno a la vez con --dns-servers hasta que encuentre uno que funcione.
+Esta opción también resulta útil al escanear redes privadas. A veces, sólo unos pocos servidores de nombres proporcionan información rDNS adecuada y es posible que ni siquiera sepas dónde están. Puede escanear la red en busca del puerto 53 (quizás con detección de versión), luego intente escanear la lista Nmap (`-sL`) especificando cada servidor de nombres uno a la vez con `--dns-servers` hasta que encuentre uno que funcione.
 
 Es posible que esta opción no se respete si la respuesta DNS excede el tamaño de un paquete UDP. En tal situación, nuestro solucionador de DNS hará el mejor esfuerzo para extraer una respuesta del paquete truncado y, si no tiene éxito, recurrirá al solucionador del sistema. Además, las respuestas que contengan alias CNAME recurrirán al solucionador del sistema.
