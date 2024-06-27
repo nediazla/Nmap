@@ -1,4 +1,4 @@
-### Especificación de destino
+# Especificación de destino
 Todo lo que hay en la línea de comandos de Nmap que no es una opción (o un argumento de opción) se trata como una especificación del host de destino. El caso más simple es especificar una dirección IP de destino o un nombre de host para escanear.
 
 Cuando se proporciona un nombre de host como destino, se resuelve a través del Sistema de nombres de dominio (DNS) para determinar la dirección IP a escanear. Si el nombre se resuelve en más de una dirección IP, solo se escaneará la primera. Para hacer que Nmap escanee todas las direcciones resueltas en lugar de solo la primera, use la opción `--resolve-all`.

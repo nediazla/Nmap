@@ -1,4 +1,4 @@
-### Conceptos básicos de escaneo de puertos
+# Conceptos básicos de escaneo de puertos
 Si bien Nmap ha crecido en funcionalidad a lo largo de los años, comenzó como un escáner de puertos eficiente y esa sigue siendo su función principal. El comando simple nmap <destino> escanea 1000 puertos TCP en el host <destino>. Si bien muchos escáneres de puertos tradicionalmente han agrupado todos los puertos en estados abiertos o cerrados, Nmap es mucho más granular. Divide los puertos en seis estados: abierto, cerrado, filtrado, sin filtrar, abierto|filtrado o cerrado|filtrado.
 
 Estos estados no son propiedades intrínsecas del puerto en sí, sino que describen cómo los ve Nmap. Por ejemplo, un escaneo de Nmap desde la misma red que el objetivo puede mostrar el puerto 135/tcp como abierto, mientras que un escaneo al mismo tiempo con las mismas opciones desde Internet puede mostrar ese puerto como filtrado.

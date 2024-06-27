@@ -1,4 +1,4 @@
-### Resumen de opciones
+# Resumen de opciones
 Este resumen de opciones se imprime cuando se ejecuta Nmap sin argumentos y la última versión siempre está disponible en https://svn.nmap.org/nmap/docs/nmap.usage.txt. Ayuda a las personas a recordar las opciones más comunes, pero no sustituye la documentación detallada del resto de este manual. Algunas opciones oscuras ni siquiera están incluidas aquí
 
 ```shell-sesion

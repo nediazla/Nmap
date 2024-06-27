@@ -1,37 +1,37 @@
-## Port Specification and Scan Order
+# Port Specification and Scan Order
 
-In addition to all of the scan methods discussed previously, Nmap offers options for specifying which ports are scanned and whether the scan order is randomized or sequential. By default, Nmap scans the most common 1,000 ports for each protocol.
+Además de todos los métodos de escaneo discutidos anteriormente, Nmap ofrece opciones para especificar qué puertos se escanean y si el orden de escaneo es aleatorio o secuencial. De forma predeterminada, Nmap escanea los 1000 puertos más comunes para cada protocolo.
 
 ``-p _`<port ranges>`_`` (Only scan specified ports)
 
-This option specifies which ports you want to scan and overrides the default. Individual port numbers are OK, as are ranges separated by a hyphen (e.g. `1-1023`). The beginning and/or end values of a range may be omitted, causing Nmap to use 1 and 65535, respectively. So you can specify `-p-` to scan ports from 1 through 65535. Scanning port zero is allowed if you specify it explicitly. For IP protocol scanning (`-sO`), this option specifies the protocol numbers you wish to scan for (0–255).
+Esta opción especifica qué puertos desea escanear y anula el valor predeterminado. Los números de puerto individuales están bien, al igual que los rangos separados por un guión (por ejemplo, `1-1023`). Los valores inicial y/o final de un rango pueden omitirse, lo que hace que Nmap utilice 1 y 65535, respectivamente. Por lo tanto, puede especificar `-p-` para escanear los puertos del 1 al 65535. Se permite escanear el puerto cero si lo especifica explícitamente. Para el escaneo de protocolo IP (`-sO`), esta opción especifica los números de protocolo que desea escanear (0–255).
 
-When scanning a combination of protocols (e.g. TCP and UDP), you can specify a particular protocol by preceding the port numbers by `T:` for TCP, `U:` for UDP, `S:` for SCTP, or `P:` for IP Protocol. The qualifier lasts until you specify another qualifier. For example, the argument `-p U:53,111,137,T:21-25,80,139,8080` would scan UDP ports 53, 111,and 137, as well as the listed TCP ports. Note that to scan both UDP and TCP, you have to specify `-sU` and at least one TCP scan type (such as `-sS`, `-sF`, or `-sT`). If no protocol qualifier is given, the port numbers are added to all protocol lists.
+Al escanear una combinación de protocolos (por ejemplo, TCP y UDP), puede especificar un protocolo en particular anteponiendo los números de puerto con `T:` para TCP, `U:` para UDP, `S:` para SCTP o `P: ` para protocolo IP. El calificador dura hasta que especifica otro calificador. Por ejemplo, el argumento `-p U:53,111,137,T:21-25,80,139,8080` escanearía los puertos UDP 53, 111 y 137, así como los puertos TCP enumerados. Tenga en cuenta que para escanear tanto UDP como TCP, debe especificar `-sU` y al menos un tipo de escaneo TCP (como `-sS`, `-sF` o `-sT`). Si no se proporciona ningún calificador de protocolo, los números de puerto se agregan a todas las listas de protocolos.
 
-Ports can also be specified by name according to what the port is referred to in the `nmap-services`. You can even use the wildcards `*` and `?` with the names. For example, to scan FTP and all ports whose names begin with “http”, use `-p ftp,http*`. Be careful about shell expansions and quote the argument to `-p` if unsure.
+Los puertos también se pueden especificar por nombre de acuerdo con el nombre al que se hace referencia en los ``nmap-services`. Incluso puedes utilizar los comodines `*` y `?` con los nombres. Por ejemplo, para escanear FTP y todos los puertos cuyos nombres comiencen con “http”, utilice `-p ftp,http*`. Tenga cuidado con las expansiones del shell y cite el argumento `-p` si no está seguro.
 
-Ranges of ports can be surrounded by square brackets to indicate ports inside that range that appear in `nmap-services`. For example, the following will scan all ports in `nmap-services` equal to or below 1024: `-p [-1024]`. Be careful with shell expansions and quote the argument to `-p` if unsure.
+Los rangos de puertos pueden estar entre corchetes para indicar los puertos dentro de ese rango que aparecen en `nmap-services`. Por ejemplo, lo siguiente escaneará todos los puertos en `nmap-services` iguales o inferiores a 1024: `-p [-1024]`. Tenga cuidado con las expansiones del shell y cite el argumento `-p` si no está seguro.
 
 ``--exclude-ports _`<port ranges>`_`` (Exclude the specified ports from scanning)
 
-This option specifies which ports you do want Nmap to exclude from scanning. The _`<port ranges>`_ are specified similar to `-p`. For IP protocol scanning (`-sO`), this option specifies the protocol numbers you wish to exclude (0–255).
+Esta opción especifica qué puertos desea que Nmap excluya del análisis. Los _`<rangos de puertos>`_ se especifican de manera similar a `-p`. Para el escaneo de protocolo IP (`-sO`), esta opción especifica los números de protocolo que desea excluir (0–255).
 
-When ports are asked to be excluded, they are excluded from all types of scans (i.e. they will not be scanned under any circumstances). This also includes the discovery phase.
+Cuando se solicita la exclusión de puertos, se excluyen de todo tipo de análisis (es decir, no se analizarán bajo ninguna circunstancia). Esto también incluye la fase de descubrimiento.
 
 `-F` (Fast (limited port) scan)
 
-Specifies that you wish to scan fewer ports than the default. Normally Nmap scans the most common 1,000 ports for each scanned protocol. With `-F`, this is reduced to 100.
+Especifica que desea escanear menos puertos que los predeterminados. Normalmente, Nmap escanea los 1000 puertos más comunes para cada protocolo escaneado. Con `-F`, esto se reduce a 100.
 
-Nmap needs an `nmap-services` file with frequency information in order to know which ports are the most common (see [the section called “Well Known Port List: `nmap-services`”](https://nmap.org/book/nmap-services.html "Well Known Port List: nmap-services") for more about port frequencies). If port frequency information isn't available, perhaps because of the use of a custom `nmap-services` file, Nmap scans all named ports plus ports 1-1024. In that case, `-F` means to scan only ports that are named in the services file.
+Nmap necesita un archivo `nmap-services` con información de frecuencia para saber qué puertos son los más comunes (consulte [la sección llamada “Lista de puertos conocidos: `nmap-services`”](https://nmap.org/ book/nmap-services.html "Lista de puertos conocidos: nmap-services") para obtener más información sobre las frecuencias de los puertos). Si la información de frecuencia de puertos no está disponible, tal vez debido al uso de un archivo personalizado `nmap-services` , Nmap escanea todos los puertos nombrados más los puertos 1-1024. En ese caso, `-F` significa escanear solo los puertos nombrados en el archivo de servicios.
 
 `-r` (Don't randomize ports)
 
-By default, Nmap randomizes the scanned port order (except that certain commonly accessible ports are moved near the beginning for efficiency reasons). This randomization is normally desirable, but you can specify `-r` for sequential (sorted from lowest to highest) port scanning instead.
+De forma predeterminada, Nmap aleatoriza el orden de los puertos escaneados (excepto que ciertos puertos comúnmente accesibles se mueven cerca del principio por razones de eficiencia). Esta aleatorización normalmente es deseable, pero en su lugar puede especificar `-r` para el escaneo de puertos secuencial (ordenado de menor a mayor).
 
 ``--port-ratio _`<ratio>`_<decimal number between 0 and 1>``
 
-Scans all ports in `nmap-services` file with a ratio greater than the one given. _`<ratio>`_ must be between 0.0 and 1.0.
+Analiza todos los puertos en el archivo `nmap-services` con una proporción mayor que la proporcionada._`<ratio>`_ debe estar entre 0,0 y 1,0.
 
 ``--top-ports _`<n>`_``
 
-Scans the _`<n>`_ highest-ratio ports found in `nmap-services` file after excluding all ports specified by `--exclude-ports`. _`<n>`_ must be 1 or greater.
+Analiza los _`<n>`_ puertos con la proporción más alta que se encuentran en el archivo `nmap-services` después de excluir todos los puertos especificados por `--exclude-ports`._`<n>`_ debe ser 1 o mayor.
